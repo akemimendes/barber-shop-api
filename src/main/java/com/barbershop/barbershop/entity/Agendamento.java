@@ -1,6 +1,7 @@
 package com.barbershop.barbershop.entity;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 import com.barbershop.barbershop.entity.dto.AgendamentoDTO;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -33,17 +34,18 @@ public class Agendamento {
     private LocalDate data;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
-    private LocalDate hora;
+    private LocalTime hora;
 
     @ToString.Exclude
     @ManyToOne
     @JoinColumn(name = "id_cliente")
-    private Cliente cliente = new Cliente();
+    private Cliente cliente;
 
     public Agendamento(AgendamentoDTO agendamento) {
         this.data = agendamento.getData();
         this.hora = agendamento.getHora();
-        this.cliente = agendamento.getCliente();
+	cliente = new Cliente();
+        this.cliente.setId(agendamento.getClienteId());
     }
 
 }

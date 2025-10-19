@@ -5,8 +5,10 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.barbershop.barbershop.entity.Agendamento;
+import com.barbershop.barbershop.entity.Cliente;
 import com.barbershop.barbershop.exception.NaoEncontradoExcecao;
 import com.barbershop.barbershop.repository.IAgendamentoRepository;
+import com.barbershop.barbershop.repository.IClienteRepository;
 import com.barbershop.barbershop.service.IAgendamentoService;
 
 import lombok.AllArgsConstructor;
@@ -16,6 +18,7 @@ import lombok.AllArgsConstructor;
 public class AgendamentoService implements IAgendamentoService {
 
     private final IAgendamentoRepository agendamentoRepository;
+    private final IClienteRepository clienteRepository;
 
     @Override
     public List<Agendamento> findAll() {
@@ -24,6 +27,14 @@ public class AgendamentoService implements IAgendamentoService {
 
     @Override
     public Agendamento save(Agendamento agendamento) {
+	
+	 if (agendamento.getCliente().getId() == null) {
+            throw new IllegalArgumentException("O ID do cliente não pode ser nulo.");
+        }
+
+	Cliente cliente = clienteRepository.findById(agendamento.getCliente().getId())
+                                          .orElseThrow(() -> new NaoEncontradoExcecao("Cliente não encontrado"));
+        agendamento.setCliente(cliente);
         return agendamentoRepository.save(agendamento);
     }
 

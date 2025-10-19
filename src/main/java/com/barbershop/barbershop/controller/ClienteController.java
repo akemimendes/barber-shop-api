@@ -1,8 +1,9 @@
 package com.barbershop.barbershop.controller;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
-
+import java.net.URI;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.barbershop.barbershop.entity.Cliente;
 import com.barbershop.barbershop.entity.dto.ClienteDTO;
@@ -44,8 +46,8 @@ public class ClienteController {
 
     @PostMapping
     public ResponseEntity<ClienteDTO> save(@RequestBody ClienteDTO cliente){
-        clienteService.save(new Cliente(cliente));
-        return ResponseEntity.ok().body(cliente);
+        Cliente newCliente=clienteService.save(new Cliente(cliente));
+        return ResponseEntity.ok().body(new ClienteDTO(newCliente));
     }
 
     @PutMapping(value = "/{id}")
@@ -57,7 +59,7 @@ public class ClienteController {
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Object> delete(@PathVariable long id){
         clienteService.delete(id);
-        return ResponseEntity.ok().body("Cliente excluído com sucesso!");
+        return ResponseEntity.ok().body(Map.of("message","Cliente excluído com sucesso!"));
     }
 
 }

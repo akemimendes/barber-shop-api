@@ -1,6 +1,7 @@
 package com.barbershop.barbershop.controller;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.http.ResponseEntity;
@@ -44,7 +45,7 @@ public class AgendamentoController {
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Object> delete(@PathVariable long id){
         agendamentoService.delete(id);
-        return ResponseEntity.ok().body("Agendamento excluído com sucesso!");
+        return ResponseEntity.ok().body(Map.of("message","Agendamento excluído com sucesso!"));
     }
 
 }

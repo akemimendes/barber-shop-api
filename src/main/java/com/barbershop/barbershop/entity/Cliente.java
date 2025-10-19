@@ -39,17 +39,18 @@ public class Cliente {
     @Column(nullable = false)
     private String nome;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String telefone;
 
     @ToString.Exclude
-    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "cliente")
     private Set<Agendamento> agendamentos = new HashSet<Agendamento>();
 
      public Cliente(ClienteDTO cliente){
+	this.id=cliente.getId();
         this.nome=cliente.getNome();
         this.email = cliente.getEmail();
         this.telefone = cliente.getTelefone();

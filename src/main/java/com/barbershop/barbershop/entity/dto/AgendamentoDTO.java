@@ -1,24 +1,34 @@
 package com.barbershop.barbershop.entity.dto;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import com.barbershop.barbershop.entity.Agendamento;
-import com.barbershop.barbershop.entity.Cliente;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 public class AgendamentoDTO {
 
+    private Long id;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private LocalDate data;
+	
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
+    private LocalTime hora;
 
-    private LocalDate hora;
-
-    private Cliente cliente = new Cliente();
+    private Long clienteId;
 
     public AgendamentoDTO(Agendamento agendamento){
+	this.id = agendamento.getId();
         this.data = agendamento.getData();
         this.hora = agendamento.getHora();
-        this.cliente = agendamento.getCliente();
+        this.clienteId = agendamento.getCliente().getId();
     }
 }
