@@ -1,6 +1,6 @@
 ## Projeto do curso Decola Tech
 
-### Sistema de movimentação de cliente e agendamento de servico com cliente,data e horário
+### Sistema de movimentação de cliente e agendamento de servico
 
 O projeto foi desenvolvido em Java + Spring Boot
 
